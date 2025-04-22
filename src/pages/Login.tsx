@@ -16,6 +16,8 @@ import {
 } from './Login.styled.tsx';
 
 const Login = () => {
+  console.log('Login component rendering');
+
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
@@ -54,7 +56,7 @@ const Login = () => {
       formData.password === validCredentials.password &&
       formData.pin === validCredentials.pin
     ) {
-      login(); // Set authenticated state
+      login();
       navigate('/dashboard');
     } else {
       setError('Invalid credentials. Please try again.');

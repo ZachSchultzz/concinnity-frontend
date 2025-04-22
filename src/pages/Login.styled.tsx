@@ -1,23 +1,14 @@
 import styled from 'styled-components';
-import backgroundImage from '../assets/Login Background.png';
 
 export const PageContainer = styled.div`
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-  background: url(${backgroundImage}) no-repeat center center fixed;
-  background-size: cover;
+  background: #2c2c54;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
+  min-height: 100vh;
   color: white;
-  overflow: hidden;
 `;
 
 export const Container = styled.div`
