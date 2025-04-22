@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import backgroundImage from '../assets/login-background.png';
 
 export const DashboardWrapper = styled.div`
   margin: 0;
   padding: 0;
-  background: url(${backgroundImage}) no-repeat center center fixed, #2c2c54;
-  background-size: cover;
+  background: #2c2c54;
   min-height: 100vh;
   display: flex;
   position: relative;
@@ -43,6 +41,12 @@ export const DashboardContainer = styled.div`
   flex: 1;
   color: white;
   z-index: 1;
+  margin-left: 75px; /* 30% of sidebar width (250px * 0.3) when hidden */
+  transition: margin-left 0.3s ease;
+
+  ${Sidebar}:hover ~ & {
+    margin-left: 250px; /* Full sidebar width when visible */
+  }
 `;
 
 export const Header = styled.div`

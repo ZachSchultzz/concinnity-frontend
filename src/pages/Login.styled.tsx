@@ -1,21 +1,23 @@
 import styled from 'styled-components';
+import backgroundImage from '../assets/login-background.png';
 
 export const PageContainer = styled.div`
   margin: 0;
   padding: 0;
-  background: #2c2c54;
+  background: url(${backgroundImage}) no-repeat center center fixed, #2c2c54; /* Fallback color */
+  background-size: cover;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   color: white;
+  font-family: 'Poppins', Arial, sans-serif;
 `;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: transparent;
 `;
 
 export const Header = styled.div`
@@ -29,11 +31,8 @@ export const Header = styled.div`
 export const WelcomeText = styled.h2`
   font-size: 3rem;
   color: white;
-  text-transform: none;
   margin: 0;
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
+  font-family: 'Poppins', Arial, sans-serif;
 `;
 
 export const ConcinnityText = styled.h1`
@@ -41,25 +40,18 @@ export const ConcinnityText = styled.h1`
   color: white;
   font-weight: bold;
   font-style: italic;
-  text-transform: none;
   margin: 0;
-  @media (max-width: 480px) {
-    font-size: 3rem;
-  }
+  font-family: 'Poppins', Arial, sans-serif;
 `;
 
 export const Form = styled.form`
   background: rgba(0, 0, 0, 0.5);
   padding: 2rem;
   border-radius: 15px;
-  backdrop-filter: blur(10px);
   width: 400px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  @media (max-width: 480px) {
-    width: 90%;
-  }
 `;
 
 export const InputRow = styled.div`
@@ -77,9 +69,9 @@ export const Input = styled.input`
   color: white;
   font-size: 1rem;
   text-align: center;
+  font-family: 'Poppins', Arial, sans-serif;
   &::placeholder {
     color: rgba(255, 255, 255, 0.7);
-    text-align: center;
   }
 `;
 
@@ -92,12 +84,9 @@ export const Button = styled.button`
   font-weight: bold;
   cursor: pointer;
   margin-top: 1rem;
-  transition: background 0.3s ease;
   align-self: center;
   width: 100px;
-  &:hover {
-    background: #e0e0e0;
-  }
+  font-family: 'Poppins', Arial, sans-serif;
 `;
 
 export const ForgotLink = styled.a`
@@ -106,9 +95,7 @@ export const ForgotLink = styled.a`
   text-decoration: none;
   margin-top: 0.5rem;
   text-align: center;
-  &:hover {
-    text-decoration: underline;
-  }
+  font-family: 'Poppins', Arial, sans-serif;
 `;
 
 export const ErrorMessage = styled.p`
@@ -116,4 +103,5 @@ export const ErrorMessage = styled.p`
   font-size: 0.9rem;
   text-align: center;
   margin: 0;
+  font-family: 'Poppins', Arial, sans-serif;
 `;
