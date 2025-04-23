@@ -1,14 +1,10 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.tsx';
+import Layout from './Layout.tsx';
 import {
-  DashboardWrapper,
-  Sidebar,
-  SidebarLink,
-  DashboardContainer,
   Header,
   TenantTitle,
-  TenantDetail,
   UserGreeting,
   CardsSection,
   Card,
@@ -22,13 +18,12 @@ import {
   TableRow,
   TableCell,
   ActionButton,
-  LogoutButton,
 } from './Dashboard.styled.tsx';
 
 const Dashboard = () => {
   console.log('Dashboard component rendering');
 
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,11 +63,6 @@ const Dashboard = () => {
     },
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
   const handleViewDetails = (employeeId: number) => {
     alert(`View details for employee ID: ${employeeId}`);
   };
@@ -82,76 +72,65 @@ const Dashboard = () => {
   }
 
   return (
-    <DashboardWrapper>
-      <Sidebar>
-        <SidebarLink href="/dashboard">Dashboard</SidebarLink>
-        <SidebarLink href="/tasks">Tasks</SidebarLink>
-        <SidebarLink href="/messages">Messages</SidebarLink>
-        <SidebarLink href="/team">Team</SidebarLink>
-        <SidebarLink href="/settings">Settings</SidebarLink>
-      </Sidebar>
-      <DashboardContainer>
-        <Header>
-          <TenantTitle>{tenantData.businessName} Dashboard</TenantTitle>
-          <TenantDetail>BIN: {tenantData.bin}</TenantDetail>
-          <UserGreeting>Welcome, {tenantData.user.firstName} {tenantData.user.lastName}</UserGreeting>
-        </Header>
-        <CardsSection>
-          <Card>
-            <CardTitle>Tasks</CardTitle>
-            <CardValue>{tenantData.tasks.length} Active</CardValue>
-          </Card>
-          <Card>
-            <CardTitle>Messages</CardTitle>
-            <CardValue>{tenantData.messages.length} Unread</CardValue>
-          </Card>
-          <Card>
-            <CardTitle>Team</CardTitle>
-            <CardValue>{tenantData.employees.length} Members</CardValue>
-          </Card>
-          <Card>
-            <CardTitle>Analytics</CardTitle>
-            <CardValue>{tenantData.analytics.activeUsers} Active Users</CardValue>
-          </Card>
-        </CardsSection>
-        <NotificationsSection>
-          <SectionTitle>Notifications</SectionTitle>
-          {tenantData.notifications.map((notification) => (
-            <Notification key={notification.id}>
-              {notification.content} - {new Date(notification.timestamp).toLocaleString()}
-            </Notification>
+    <Layout>
+      <Header>
+        <TenantTitle>{tenantData.businessName} Dashboard</TenantTitle>
+        <UserGreeting>Welcome, {tenantData.user.firstName} {tenantData.user.lastName}</UserGreeting>
+      </Header>
+      <CardsSection>
+        <Card>
+          <CardTitle>Tasks</CardTitle>
+          <CardValue>{tenantData.tasks.length} Active</CardValue>
+        </Card>
+        <Card>
+          <CardTitle>Messages</CardTitle>
+          <CardValue>{tenantData.messages.length} Unread</CardValue>
+        </Card>
+        <Card>
+          <CardTitle>Team</CardTitle>
+          <CardValue>{tenantData.employees.length} Members</CardValue>
+        </Card>
+        <Card>
+          <CardTitle>Analytics</CardTitle>
+          <CardValue>{tenantData.analytics.activeUsers} Active Users</CardValue>
+        </Card>
+      </CardsSection>
+      <NotificationsSection>
+        <SectionTitle>Notifications</SectionTitle>
+        {tenantData.notifications.map((notification) => (
+          <Notification key={notification.id}>
+            {notification.content} - {new Date(notification.timestamp).toLocaleString()}
+          </Notification>
+        ))}
+      </NotificationsSection>
+      <SectionTitle>Employees</SectionTitle>
+      <EmployeeTable>
+        <thead>
+          <tr>
+            <TableHeader>Name</TableHeader>
+            <TableHeader>Role</TableHeader>
+            <TableHeader>Email</TableHeader>
+            <TableHeader>Department</TableHeader>
+            <TableHeader>Status</TableHeader>
+            <TableHeader>Actions</TableHeader>
+          </tr>
+        </thead>
+        <tbody>
+          {tenantData.employees.map((employee) => (
+            <TableRow key={employee.id}>
+              <TableCell>{employee.name}</TableCell>
+              <TableCell>{employee.role}</TableCell>
+              <TableCell>{employee.email}</TableCell>
+              <TableCell>{employee.department}</TableCell>
+              <TableCell>{employee.status}</TableCell>
+              <TableCell>
+                <ActionButton onClick={() => handleViewDetails(employee.id)}>View Details</ActionButton>
+              </TableCell>
+            </TableRow>
           ))}
-        </NotificationsSection>
-        <SectionTitle>Employees</SectionTitle>
-        <EmployeeTable>
-          <thead>
-            <tr>
-              <TableHeader>Name</TableHeader>
-              <TableHeader>Role</TableHeader>
-              <TableHeader>Email</TableHeader>
-              <TableHeader>Department</TableHeader>
-              <TableHeader>Status</TableHeader>
-              <TableHeader>Actions</TableHeader>
-            </tr>
-          </thead>
-          <tbody>
-            {tenantData.employees.map((employee) => (
-              <TableRow key={employee.id}>
-                <TableCell>{employee.name}</TableCell>
-                <TableCell>{employee.role}</TableCell>
-                <TableCell>{employee.email}</TableCell>
-                <TableCell>{employee.department}</TableCell>
-                <TableCell>{employee.status}</TableCell>
-                <TableCell>
-                  <ActionButton onClick={() => handleViewDetails(employee.id)}>View Details</ActionButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </tbody>
-        </EmployeeTable>
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-      </DashboardContainer>
-    </DashboardWrapper>
+        </tbody>
+      </EmployeeTable>
+    </Layout>
   );
 };
 
