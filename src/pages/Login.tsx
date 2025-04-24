@@ -24,15 +24,37 @@ const Login = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     login(credentials);
-    // Check if login was successful
     setTimeout(() => {
       if (isAuthenticated) {
         navigate('/dashboard');
       } else {
-        setError('Invalid credentials. Please try again.');
+        setError('Oops, looks like something’s not quite right. Double-check your credentials, or let us help you recover your account.');
       }
     }, 0); // Small delay to ensure state update
   };
+
+  const responsiveStyles = `
+    @media (max-width: 600px) {
+      form {
+        max-width: 90%;
+        padding: 1rem;
+      }
+      div[style*="display: flex"] {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      input {
+        flex: none;
+        width: 100% !important;
+      }
+      h1:first-child {
+        font-size: 1.5rem;
+      }
+      h1:last-child {
+        font-size: 2.5rem;
+      }
+    }
+  `;
 
   return (
     <div
@@ -50,6 +72,7 @@ const Login = () => {
         fontFamily: "'Poppins', Arial, sans-serif",
       }}
     >
+      <style>{responsiveStyles}</style>
       {/* Background Overlay with Blur */}
       <div
         style={{
@@ -92,6 +115,8 @@ const Login = () => {
             value={credentials.businessName}
             onChange={handleInputChange}
             placeholder="Business Name"
+            aria-label="Business Name"
+            tabIndex={0}
             style={{
               flex: 1,
               padding: '0.5rem',
@@ -110,6 +135,8 @@ const Login = () => {
             value={credentials.bin}
             onChange={handleInputChange}
             placeholder="BIN"
+            aria-label="BIN"
+            tabIndex={0}
             style={{
               flex: 1,
               padding: '0.5rem',
@@ -131,6 +158,8 @@ const Login = () => {
             value={credentials.firstName}
             onChange={handleInputChange}
             placeholder="First Name"
+            aria-label="First Name"
+            tabIndex={0}
             style={{
               flex: 1,
               padding: '0.5rem',
@@ -149,6 +178,8 @@ const Login = () => {
             value={credentials.lastName}
             onChange={handleInputChange}
             placeholder="Last Name"
+            aria-label="Last Name"
+            tabIndex={0}
             style={{
               flex: 1,
               padding: '0.5rem',
@@ -170,6 +201,8 @@ const Login = () => {
             value={credentials.password}
             onChange={handleInputChange}
             placeholder="Password"
+            aria-label="Password"
+            tabIndex={0}
             style={{
               flex: 1,
               padding: '0.5rem',
@@ -188,6 +221,8 @@ const Login = () => {
             value={credentials.pin}
             onChange={handleInputChange}
             placeholder="PIN"
+            aria-label="PIN"
+            tabIndex={0}
             style={{
               flex: 1,
               padding: '0.5rem',
@@ -203,6 +238,8 @@ const Login = () => {
         </div>
         <button
           type="submit"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && handleLogin(e)}
           style={{
             padding: '0.5rem 1rem',
             background: '#007bff',
@@ -215,10 +252,14 @@ const Login = () => {
             fontFamily: "'Poppins', Arial, sans-serif",
             fontWeight: 'bold',
             fontSize: '1rem',
-            transition: 'transform 0.2s ease',
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           }}
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1.0)')}
+          onClick={(e) => {
+            e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.5)';
+            setTimeout(() => (e.currentTarget.style.boxShadow = 'none'), 300);
+          }}
         >
           Login
         </button>
